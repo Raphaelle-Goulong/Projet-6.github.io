@@ -58,30 +58,16 @@ fetch("http://localhost:5678/api/works")
         console.log(categoryId);
         let figures = document.getElementsByClassName("figureContainer")
         const figureArray = Array.from(figures);
-        console.log(figures);
+        console.log(figureArray);
         
-        for (let j = 0; j < figures.length; j++) {
-        //   // cette ligne cherche le parent ou le grand parent LE PLUS PROCHE de l'image de la boucle
-        //   let figure = photos[j].closest("figure"); 
-        //   let dataCat = figure.getAttribute("data-cat");
+        for (let j = 0; j < figureArray.length; j++) {
           
-          if (categoryId === figures[j].getAttribute("data-cat") ) {
-            figures[j].style.display = "block";
-            // let figcaption = figure.querySelector("figcaption");
-            // if (figcaption) {
-            //   figcaption.style.display = "none";
-            // }
+          if (categoryId == figureArray[j].dataset.cat ) {
+            figureArray[j].style.display = "block";
+        
           } 
           else {
-            figures[j].style.display = "none";
-            // let figcaption = figures.querySelector("figcaption");
-            
-            // if (figcaption && photos[j].style.display === "none") {
-            //   figcaption.style.display = "none";
-            // } 
-            // else if (figcaption) {
-            //   figcaption.style.display = "block";
-            // }
+            figureArray[j].style.display = "none";
           }
         }
       });
