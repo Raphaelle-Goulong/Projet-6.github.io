@@ -7,7 +7,7 @@ fetch("http://localhost:5678/api/works")
   .then((data, dataFilter) => {
     // regarder ce qu'on reçoit pour bien cibler l'objet
     buildHtml(data)
-    photos = document.querySelectorAll(".gallery img");
+    
     // Ici je veux qu'un seul user, donc j'envoie [0] pour le 1er user 
   })
  
@@ -59,7 +59,7 @@ fetch("http://localhost:5678/api/works")
         let figures = document.getElementsByClassName("figureContainer")
         const figureArray = Array.from(figures);
         console.log(figureArray);
-        
+        // boucle qui récupère le tableau des figures
         for (let j = 0; j < figureArray.length; j++) {
           
           if (categoryId == figureArray[j].dataset.cat ) {
