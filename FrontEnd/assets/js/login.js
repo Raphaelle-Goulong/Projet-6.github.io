@@ -4,8 +4,6 @@
 //      body: chargeUtile
 // });
    
-
- 
     
 document.addEventListener("DOMContentLoaded", function () {
     // je récupère les élément que je vais devoir récupérer les valeurs
@@ -31,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Authentification échouée. Veuillez vérifier vos informations.");
         }
 
-        // comment récuperer le token et le vérifier !! Cela reste un mystère ??
+        //mnt comment récuperer le token et le vérifier !! Cela reste un mystère ??
     });
 });
 // }
