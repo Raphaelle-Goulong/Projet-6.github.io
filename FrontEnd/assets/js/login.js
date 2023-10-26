@@ -1,11 +1,4 @@
-// fetch("http://localhost:5678/api/users/login", {
-//      method: "POST",
-//      headers: { "Content-Type": "application/json" },
-//      body: chargeUtile
-// });
-   
-    
-document.addEventListener("DOMContentLoaded", function () {
+
     // je récupère les élément que je vais devoir récupérer les valeurs
     const loginForm = document.querySelector("form");
     // console.log(loginForm);
@@ -22,14 +15,40 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = passwordInput.value;
 
         // condition qui permet de vérifier le mail + le mot de passe
-        if (email === "sophie.bluel@test.tld" && password === "S0phie") {
-            alert("Authentification réussie !");
+        fetch("http://localhost:5678/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify 
+                    ({
+                    "email": email,
+                    "password": password
+                    })
+                })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.message !=  null) {
+                    alert("Authentification échouée. Veuillez vérifier vos informations.");
+                    return
+                }
+                alert("Authentification réussie !");
+                localStorage.setItem("Token", data.token);
+                console.log(data.token);
+            })
+            // Gestion d'erreur IMPORTANT
+            .catch((error) => {
+                // Si erreur dans URL, retourne l'erreur pour pas bloquer la création de la page
+                return error;
+                // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
+            })
+
+            
+            
            
-        } else {
-            alert("Authentification échouée. Veuillez vérifier vos informations.");
-        }
+        
+            
+       
 
         //mnt comment récuperer le token et le vérifier !! Cela reste un mystère ??
-    });
-});
-// }
+        });
+
