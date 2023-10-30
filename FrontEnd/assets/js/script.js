@@ -5,6 +5,7 @@ function getData(url) {
       .then((res) => res.json())
       .then((data) => {
         return data;
+        
       })
       // Gestion d'erreur IMPORTANT
       .catch((error) => {
@@ -15,13 +16,9 @@ function getData(url) {
   );
 }
 
-// function buildHTMLWork(works) {
-//   /* (ta fonction de build) */
-//   buildHtml(data)
-//   buildFilter(dataFilter)
-// }
+
 function buildHtml(data) {
-  console.log(data);
+  // console.log(data);
   // Sélectionne les figures
   let myProjets = document.querySelector(".gallery");
 
@@ -76,28 +73,40 @@ function buildFilter(dataFilter) {
   }
 }
 
+function buildButton(button) {
+    let btnTous = document.querySelector(".all");
+    // console.log(btnTous);
+    btnTous.addEventListener("click", () => {
+      let figuresAll = document.querySelectorAll("figure");
+      // console.log(figuresAll);
+      for (let a = 0; a < figuresAll.length; a++) {
+        figuresAll[a].style.display = "block";
+      }
+    });
+}
+
 // pour utiliser await, on doit le mettre dans une fonction (et non pas en top level, en racine de page)
 async function startPage() {
   works = await getData("http://localhost:5678/api/works");
   category = await getData("http://localhost:5678/api/categories");
   buildFilter(category);
   buildHtml(works);
+  buildButton(works) 
   // Puis continuer avec l'apel vers la fonction qui crée les boutons de filtre
   // Etc...
-  
-}
+}  
 startPage();
 
 
-// // On fetch sur l'url
+// On fetch sur l'url
 // fetch("http://localhost:5678/api/works")
 //   // On transforme les data en Json
 //   .then((res) => res.json())
 //   // On peut utiliser les data
-//   .then((data, dataFilter) => {
+//   .then((button) => {
 //     // regarder ce qu'on reçoit pour bien cibler l'objet
-//     buildHtml(data)
-    
+//     // buildHtml(data)
+//     buildButton(button)
 //     // Ici je veux qu'un seul user, donc j'envoie [0] pour le 1er user 
 //   })
  
@@ -107,7 +116,17 @@ startPage();
 //     return error;
 //     // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
 //   });
-
+//   function buildButton(button) {
+//     let btnTous = document.querySelector(".all");
+//     console.log(btnTous);
+//     btnTous.addEventListener("click", () => {
+//       let figuresAll = document.querySelectorAll("figure");
+//       console.log(figuresAll);
+//       for (let a = 0; a < figuresAll.length; a++) {
+//         figuresAll[a].style.display = "block";
+//       }
+//     });
+//   }
  
 //   function buildHtml(data) {
 //     console.log(data);

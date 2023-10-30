@@ -105,13 +105,16 @@ main{
     margin-bottom: 150px; 
 }
 
- form a{
+form a{
     display: flex;
     align-items: center;
     justify-content: center;
     color: black;
 }
 
+.login{
+	font-weight: 900;
+}
 
 #contact {
 	width: 50%;
