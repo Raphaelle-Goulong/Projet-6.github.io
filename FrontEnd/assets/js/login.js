@@ -26,18 +26,22 @@
                 })
             .then((res) => res.json())
             .then((data) => {
+                const messageElement = document.getElementById("message");
                 console.log(data);
                 if (data.message !=  null) {
-                    alert("Authentification échouée. Veuillez vérifier vos informations.");
+                    messageElement.textContent = "Authentification échouée. Veuillez vérifier vos informations.";
                     return
                 }
-                alert("Authentification réussie !");
+                messageElement.textContent = "Authentification réussie !";
                 localStorage.setItem("Token", data.token);
-                console.log(data.token);
+                // console.log(data.token);
+                window.location.href ="/FrontEnd/index.html"
             })
             // Gestion d'erreur IMPORTANT
             .catch((error) => {
                 // Si erreur dans URL, retourne l'erreur pour pas bloquer la création de la page
+                const messageElement = document.getElementById("message");
+                messageElement.textContent = "Une erreur s'est produite : " + error.message;
                 return error;
                 // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
             })

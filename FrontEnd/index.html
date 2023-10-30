@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
@@ -25,7 +26,7 @@
 <main>
 	<section id="introduction">
 		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt=" n">
+			<img src="./assets/images/sophie-bluel.png" alt="">
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -35,7 +36,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="projets">
+			<h2>Mes Projets</h2>
+			<div class="modify">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<p>modifier</p>
+			</div>
+		</div>
 		<div class="btn-box">
 			<button class="btn-sorting all"> Tous</button>
 		</div>
@@ -57,6 +64,22 @@
 	</section>
 </main>
 <!-- modal -->
+<!-- <div class="modalContainer">
+	<div class="modal">
+		<i class="fa-solid fa-xmark"></i>
+		<h3>Galerie Photo</h3>
+			<div class="galleryPhoto">
+				<figure class="figureContent">
+					<img src="/FrontEnd/assets/images/abajour-tahina.png" alt="">
+					<i class="fa-solid fa-trash"></i>
+				</figure>
+				
+				
+				
+			</div>
+			<button class="btn-sorting" id="addPicture">Ajouter une photo</button>
+	</div>
+</div> -->
 <footer>
 	<nav>
 		<ul>

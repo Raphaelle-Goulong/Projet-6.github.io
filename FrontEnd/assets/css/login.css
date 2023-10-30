@@ -112,6 +112,11 @@ form a{
     color: black;
 }
 
+form p{
+	margin-top: 20px;
+    color: red;
+}
+
 .login{
 	font-weight: 900;
 }
