@@ -39,8 +39,10 @@
 		<div class="projets">
 			<h2>Mes Projets</h2>
 			<div class="modify">
-				<i class="fa-regular fa-pen-to-square"></i>
-				<p>modifier</p>
+				<button class="modal-btn modal-trigger" id="token">
+					<i class="fa-regular fa-pen-to-square"></i>
+					<p>modifier</p>
+				</button>
 			</div>
 		</div>
 		<div class="btn-box">
@@ -64,22 +66,24 @@
 	</section>
 </main>
 <!-- modal -->
-<!-- <div class="modalContainer">
-	<div class="modal">
-		<i class="fa-solid fa-xmark"></i>
-		<h3>Galerie Photo</h3>
-			<div class="galleryPhoto">
-				<figure class="figureContent">
-					<img src="/FrontEnd/assets/images/abajour-tahina.png" alt="">
-					<i class="fa-solid fa-trash"></i>
-				</figure>
-				
-				
-				
-			</div>
-			<button class="btn-sorting" id="addPicture">Ajouter une photo</button>
-	</div>
-</div> -->
+<div class="modalContainer">
+		<div class="modal">
+			<button class="close-btn modal-trigger">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+			<h3>Galerie Photo</h3>
+				<div class="galleryPhoto">
+					<figure class="figureContent">
+						<!-- <img src="/FrontEnd/assets/images/abajour-tahina.png" alt="">
+						<button class="trash">
+							<i class="fa-solid fa-trash"></i>
+						</button> -->
+					</figure>
+				</div>
+				<button class="btn-sorting" id="addPicture">Ajouter une photo</button>
+		</div>
+	
+</div>
 <footer>
 	<nav>
 		<ul>
