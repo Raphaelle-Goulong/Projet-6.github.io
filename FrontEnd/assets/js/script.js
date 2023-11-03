@@ -27,6 +27,7 @@ function buildHtml(data) {
       let figure = document.createElement("figure");
       figure.classList.add("figureContainer")
       figure.setAttribute("data-cat",data[i].categoryId)
+      figure.setAttribute("data-id",data[i].id)
       myProjets.appendChild(figure);
 
       // Créez une image
@@ -114,17 +115,20 @@ function BuildImgModal(data){
       trash.classList.add("fa-trash")
       buttonTrash.appendChild(trash);
 
-      buttonTrash.addEventListener("click", () => {
+      
+      buttonTrash.addEventListener("click", (e) => {
         // console.log("vous avez cliqué");
-    
+        e.preventDefault();
        // Supprimez la figure correspondante dans buildHtml
        const figureToDelete = document.querySelector(`.figureContainer[data-cat="${data[a].categoryId}"]`);
        figureToDelete.remove();
 
       // Supprimez la figure de la galerie modale
         figureModal.remove();
-        deleteData = deleteData("http://localhost:5678/api/works/1")
+        deleteData = deleteData(`http://localhost:5678/api/works/ ${data[a].id}`)
+        console.log(deleteData);
       });
+      
  }
 }
 // pour utiliser await, on doit le mettre dans une fonction (et non pas en top level, en racine de page)
