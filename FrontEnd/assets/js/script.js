@@ -45,45 +45,61 @@ function buildHtml(data) {
 
 function buildFilter(dataFilter) {
   let buttonContainer = document.querySelector(".btn-box");
-//  cette boucle permet de crée des boutons avec les bons noms de catégorie
-  for (let i = 0; i < dataFilter.length; i++) {
-    let button = document.createElement("button");
-    button.classList.add("btn-sorting");
-    button.textContent = dataFilter[i].name;
-// cet évènement permet de faire apparaitre et disparaitre les images ainsi que les figcaptions
-    button.addEventListener("click", () => {
-      let categoryId = dataFilter[i].id;
-      console.log(categoryId);
-      let figures = document.getElementsByClassName("figureContainer")
-      const figureArray = Array.from(figures);
-      console.log(figureArray);
-      // boucle qui récupère le tableau des figures
-      for (let j = 0; j < figureArray.length; j++) {
-        
-        if (categoryId == figureArray[j].dataset.cat ) {
-          figureArray[j].style.display = "block";
-      
-        } 
-        else {
-          figureArray[j].style.display = "none";
-        }
-      }
-    });
+ // Vérifiez si l'utilisateur est authentifié en fonction de la présence du token
+ const token = localStorage.getItem("Token");
 
-    buttonContainer.appendChild(button);
+// Si un token est présent, l'utilisateur est connecté sinon
+  if (!token) {
+// L'utilisateur n'est pas connecté, créez les boutons de filtre
+
+  //  cette boucle permet de crée des boutons avec les bons noms de catégorie
+    for (let i = 0; i < dataFilter.length; i++) {
+      let button = document.createElement("button");
+      button.classList.add("btn-sorting");
+      button.textContent = dataFilter[i].name;
+  // cet évènement permet de faire apparaitre et disparaitre les images ainsi que les figcaptions
+      button.addEventListener("click", () => {
+        let categoryId = dataFilter[i].id;
+        console.log(categoryId);
+        let figures = document.getElementsByClassName("figureContainer")
+        const figureArray = Array.from(figures);
+        console.log(figureArray);
+        // boucle qui récupère le tableau des figures
+        for (let j = 0; j < figureArray.length; j++) {
+          
+          if (categoryId == figureArray[j].dataset.cat ) {
+            figureArray[j].style.display = "block";
+        
+          } 
+          else {
+            figureArray[j].style.display = "none";
+          }
+        }
+      });
+
+      buttonContainer.appendChild(button);
+    }
   }
 }
 
 function buildButton(button) {
-    let btnTous = document.querySelector(".all");
+  let btnTous = document.querySelector(".all");
     // console.log(btnTous);
-    btnTous.addEventListener("click", () => {
-      let figuresAll = document.querySelectorAll("figure");
-      // console.log(figuresAll);
-      for (let a = 0; a < figuresAll.length; a++) {
-        figuresAll[a].style.display = "block";
-      }
-    });
+  const token = localStorage.getItem("Token");
+
+  if (token) {
+    // L'utilisateur est connecté, masquez le bouton
+    btnTous.style.display = "none";
+  } 
+    else {
+        btnTous.addEventListener("click", () => {
+          let figuresAll = document.querySelectorAll("figure");
+          // console.log(figuresAll);
+          for (let a = 0; a < figuresAll.length; a++) {
+            figuresAll[a].style.display = "block";
+          }
+        });
+    }
 }
 
 // Modal ajout et supp
@@ -109,13 +125,12 @@ function BuildImgModal(data){
       buttonTrash.classList.add("trash");
       figureModal.appendChild(buttonTrash);
 
-
       let trash = document.createElement("i")
       trash.classList.add("fa-solid")
       trash.classList.add("fa-trash")
       buttonTrash.appendChild(trash);
 
-      
+
       buttonTrash.addEventListener("click", (e) => {
         // console.log("vous avez cliqué");
         e.preventDefault();
@@ -123,13 +138,29 @@ function BuildImgModal(data){
        const figureToDelete = document.querySelector(`.figureContainer[data-cat="${data[a].categoryId}"]`);
        figureToDelete.remove();
 
-      // Supprimez la figure de la galerie modale
+      // Supprimez la figure de la galerie modal
         figureModal.remove();
         deleteData = deleteData(`http://localhost:5678/api/works/ ${data[a].id}`)
         console.log(deleteData);
       });
+
       
  }
+}
+ 
+function buidAddPicture(data) {
+  let modal = document.querySelector(".modal")
+      let buttonAddPic = document.createElement("button")
+      buttonAddPic.classList.add("btn-sorting");
+      buttonAddPic.setAttribute("id","addPicture")
+      buttonAddPic.innerHTML = "Ajouter une photo";
+      modal.appendChild(buttonAddPic);
+
+      buttonAddPic.addEventListener("click", (e) => {
+        e.preventDefault();
+        let modalAddPic = document.querySelector(".modal")
+          
+      })
 }
 // pour utiliser await, on doit le mettre dans une fonction (et non pas en top level, en racine de page)
 async function startPage() {
@@ -139,6 +170,7 @@ async function startPage() {
   buildHtml(works);
   buildButton(works) 
   BuildImgModal(works);
+  buidAddPicture(works)
   // Puis continuer avec l'apel vers la fonction qui crée les boutons de filtre
   // Etc...
 }  
@@ -156,7 +188,7 @@ startPage();
     modalContainer.classList.toggle ("active")
   }
 // }
-console.log(localStorage.getItem("Token"));
+// console.log(localStorage.getItem("Token"));
  if (localStorage.getItem("Token") == null){
    document.getElementById("token").style.display = "none"
   
@@ -186,5 +218,25 @@ console.log(localStorage.getItem("Token"));
   );
 }
  
+// login log out 
+
+const loginLink = document.getElementById("login-link")
+  // console.log(loginLink);
+  let localStorageData = localStorage.getItem("Token")
+  // console.log(localStorageData);
+      if (localStorageData) {
+        // Si l'utilisateur est connecté, changez le texte du lien en "Logout"  
+        loginLink.textContent = "Logout";
+        loginLink.href = "#";  
+        // l'événement de déconnexion
+        loginLink.addEventListener("click", () => {
+          // permet de supprimer le token
+          localStorage.removeItem("Token");
+          // redirection vers la page login
+          window.location.href = "./assets/login.html";
+        });
+      } 
+// login log out end   
+
 
  

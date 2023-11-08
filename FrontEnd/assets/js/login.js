@@ -45,14 +45,6 @@
                 return error;
                 // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
             })
-
-            
-            
-           
-        
-            
-       
-
-        //mnt comment récuperer le token et le vérifier !! Cela reste un mystère ??
         });
 
+        
