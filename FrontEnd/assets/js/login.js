@@ -28,11 +28,12 @@
             .then((data) => {
                 const messageElement = document.getElementById("message");
                 console.log(data);
-                if (data.message !=  null) {
+                if (data.message !=  null ) {
                     messageElement.textContent = "Authentification échouée. Veuillez vérifier vos informations.";
                     return
                 }
-                messageElement.textContent = "Authentification réussie !";
+                
+                // messageElement.textContent = "Authentification réussie !";
                 localStorage.setItem("Token", data.token);
                 // console.log(data.token);
                 window.location.href ="/FrontEnd/index.html"

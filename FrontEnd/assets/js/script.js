@@ -103,7 +103,7 @@ function buildButton(button) {
 }
 
 // Modal ajout et supp
-function BuildImgModal(data){
+async function BuildImgModal(data){
   let modalImage = document.querySelector(".galleryPhoto")
   console.log(modalImage);
  for (let a = 0; a < data.length; a++) {
@@ -136,19 +136,26 @@ function BuildImgModal(data){
         e.preventDefault();
        // Supprimez la figure correspondante dans buildHtml
        const figureToDelete = document.querySelector(`.figureContainer[data-cat="${data[a].categoryId}"]`);
-       figureToDelete.remove();
+       //figureToDelete.remove();
 
       // Supprimez la figure de la galerie modal
-        figureModal.remove();
-        deleteData = deleteData(`http://localhost:5678/api/works/ ${data[a].id}`)
-        console.log(deleteData);
+        
+      deleteData(`http://localhost:5678/api/works/${data[a].id}`).then((result) => {
+        console.log(result);
+        if (result) {
+          figureToDelete.remove();
+          figureModal.remove();
+        }
+      });
+     
       });
 
       
  }
 }
  
-function buidAddPicture(data) {
+function buildModal(data) {
+  // création de la modal et du bouton ajouter une photo
   let modal = document.querySelector(".modal")
       let buttonAddPic = document.createElement("button")
       buttonAddPic.classList.add("btn-sorting");
@@ -156,12 +163,34 @@ function buidAddPicture(data) {
       buttonAddPic.innerHTML = "Ajouter une photo";
       modal.appendChild(buttonAddPic);
 
-      buttonAddPic.addEventListener("click", (e) => {
-        e.preventDefault();
-        let modalAddPic = document.querySelector(".modal")
-          
-      })
+      
+  // let modalPic = document.querySelector(".modal-2")
+  // buttonAddPic.addEventListener("click", (e) => {
+  //        e.preventDefault();
+  //         document.querySelector(".firstModal").style.display = "none"
+  //         // document.querySelector(".modal-2").style.display = "block";
+            
+  //        })
 }
+// function buidAddPicture(data) {
+  
+  // console.log(modalPic);
+
+  // let firstModal = document.querySelector(".firstModal")
+
+  //     buttonAddPic.addEventListener("click", (e) => {
+  //       e.preventDefault();
+  //       // document.querySelector(".firstModal").style.display = "none"
+  //       document.getElementById("modFormulaire").style.display = "block";
+          
+  //     })
+
+  //     let closeButton = document.querySelector(".close-btn");
+  //     console.log(closeButton); 
+  //       closeButton.addEventListener("click", () => {
+  //         firstModal.style.display = "block"; // Affiche à nouveau le modal lors de la fermeture
+  //     });
+// }
 // pour utiliser await, on doit le mettre dans une fonction (et non pas en top level, en racine de page)
 async function startPage() {
   works = await getData("http://localhost:5678/api/works");
@@ -170,7 +199,8 @@ async function startPage() {
   buildHtml(works);
   buildButton(works) 
   BuildImgModal(works);
-  buidAddPicture(works)
+  // buidAddPicture(works)
+  buildModal(works)
   // Puis continuer avec l'apel vers la fonction qui crée les boutons de filtre
   // Etc...
 }  
@@ -188,29 +218,39 @@ startPage();
     modalContainer.classList.toggle ("active")
   }
 // }
-// console.log(localStorage.getItem("Token"));
+
+
+// permet de faire disparaitre le bouton token en présence/absence du token
  if (localStorage.getItem("Token") == null){
    document.getElementById("token").style.display = "none"
-  
  }
 
- function deleteData(url) {
+
+function deleteData(url) {
   
   return (
     fetch(url,
       {
         method: 'DELETE',
         headers: { 
+          'Content-type': 'application/json',
             'Authorization':`Bearer ${localStorage.getItem("Token")}`,
+            
         },
       }) 
-      .then((res) => res.json())
+      .then((res) => res)
       .then((data) => {
-        return data;
+        console.log(data);
+        if (data.status != 204) {
+          return false
+        }
+        return true
+        // return data;
        
       })
       // Gestion d'erreur IMPORTANT
       .catch((error) => {
+        console.log(error);
         // Si erreur dans URL, retourne l'erreur pour pas bloquer la création de la page
         return error;
         // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
