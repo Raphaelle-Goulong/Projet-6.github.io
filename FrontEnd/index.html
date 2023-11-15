@@ -67,8 +67,8 @@
 </main>
 <!-- modal -->
 	<div class="modalContainer modal-trigger">
-		 <div class="modal firstModal" >
-			<!--<div class="modalInner1">
+		 <div class="modal firstModal " >
+			<div class="modalInner1">
 				<button class="close-btn modal-trigger">
 					<i class="fa-solid fa-xmark modal-trigger"></i>
 				</button>
@@ -76,36 +76,39 @@
 				<div class="galleryPhoto">
 					<figure class="figureContent"></figure> 
 				</div> 	
-			</div>  -->
+			</div>  
 		
 			<div class="modalInner2">
-				<button class="arrow-btn modal-trigger">
+				<button class="arrow-btn">
 					<i class="fa-solid fa-arrow-left"></i>
 				</button>
 				<button class="close-btn modal-trigger">
-					<i class="fa-solid fa-xmark modal-trigger" id="cross"></i>
+					<i class="fa-solid fa-xmark modal-trigger"></i>
 				</button>
 				<h3>Ajout photo</h3>
-					<div class="photo">
-						<i class="fa-regular fa-image"></i>
-						<button class="btn-sorting" id="btnAddPhoto"> + Ajouter photo</button>
-						<input type="file" id="picture" name="picture" accept="image/png, image/jpeg" />
-						<p> jpg, png : 4mo max</p>
-					</div>
-					<section class="formulaire">
-						<form action="" method="post">
-							<label for="tire">Titre</label>
-							<input type="text" name="titre" id="tire">
-							<label for="categorie">Categorie</label>
-							<select name="categorie" id="categorie">
-								<option value=""></option>
-								<option value="Appartement">Appartement</option>
-								<option value="Objets">Objets</option>
-								<option value="Hotels & restaurants">Hotels & restaurants</option>
-							</select>	
-						</form>
-					</section> 
-				<button class="btn-sorting" id="valid">Valider</button>
+				<section class="formulaire">
+					<form action="" method="post" id="formul">
+						<label class="cadrePhoto1" for="picture">
+							<i class="fa-regular fa-image"></i>
+							<button class="btn-sorting" id="btnAddPhoto"> + Ajouter photo</button>
+								<!-- <div class="btn-sorting" id="btnAddPhoto"> + Ajouter photo></div> -->
+							<input type="file" id="picture" name="picture" accept="image/png, image/jpeg" />
+							<p> jpg, png : 4mo max</p>
+						</label>
+							<div class="element">
+								<label for="tire">Titre</label>
+								<input type="text" name="titre" id="tire" class="inputform">
+								<label for="categorie">Categorie</label>
+								<select name="categorie" id="categorie" class="inputform">
+									<option value=""></option>
+								</select>	 
+							</div>	 
+							<label class="cadrePhoto2">
+								<img src="/FrontEnd/assets/images/appartement-paris-x.png" alt="" id="modalPhoto">
+							</label>
+					</form>
+				</section> 
+				<!-- <button class="btn-sorting" id="valid">Valider</button> -->
 			</div>
 		</div>  
 	</div>

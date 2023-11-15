@@ -369,6 +369,7 @@ input[type="submit"]{
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
+	display: none;
 }
 
 #addPicture {
@@ -382,22 +383,29 @@ input[type="submit"]{
 	cursor: pointer;
 }
 
-#btnAddPhoto{
-	position: relative;
-	z-index: 10;
-	background-color: #cbd6dc;
-	border: none;
-	width: 200px;
-	/* height: 50px; */
-	color: #306685;
+#btnAddPhoto{ 
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	/* flex-wrap: wrap; */
+	/* position: relative;  */
+	/* z-index: 1;  */
+	background-color: #cbd6dc; 
+	border: none; 
+	
+	/* width: 200px; 
+	height: 50px;  */
+	color: #306685; 
 }
 
 #picture{
 	display: flex;
-	position: relative;
-	bottom: 12px ;
-	visibility: hidden;
-	
+	color: transparent;
+	background-color: transparent;
+	/* border: ; */
+	/* width: 115px; */
+	/* position: relative;
+	bottom: 30px ; */
 }
 
 .arrow-btn{
@@ -410,27 +418,28 @@ input[type="submit"]{
 	width: 30px;
 	height: 30px;
 	cursor: pointer;
+
 }
 
 .fa-arrow-left{
 	font-size: 20px;
 }
 
-.photo{
+.cadrePhoto1{
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin-top: 30px;
 	padding: 20px;
 	width: 450px;
-	height: 150px;
+	height: auto;
 	background-color:#e8f1f6;
 }
 
 .fa-image{
 	color: #cbd6dc;
 	font-size: 70px;
+	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
@@ -439,20 +448,44 @@ input[type="submit"]{
 }
 
 .photo p{
-	margin: 10px;
+	margin: 10px 0 20px 0;
 }
- 
 
+.cadrePhoto2{
+	display: flex;
+	justify-content: center;
+	width: 200px;
+	height: 100%;
+	display: none;
+	background-color:#e8f1f6;
+
+}
+
+#modalPhoto{
+	width: 130px;
+}
 /* formulaire */
 	
+.element{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.202) ;
+	padding-bottom: 40px ;
+}
 
 .formulaire{
-	width: 490px;
-	margin: 20px;
-	padding-bottom: 40px ;
-	border-bottom: 1px solid rgba(128, 128, 128, 0.202) ;
-	/* background-color: #1D6154; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 500px;
+	height: auto;
 }
+
 .formulaire > * {
 	text-align: center;	
 }
@@ -465,7 +498,7 @@ input[type="submit"]{
 	flex-direction: column;
 }
 
-.formulaire input {
+.inputform {
 	height: 40px;
 	font-size: 1.2em;
 	border: none;
@@ -478,13 +511,11 @@ input[type="submit"]{
 }
 
 select {
-	
 	height: 40px;
 	font-size: 1.1em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	text-align: left;
-	/* margin-top:10px; */
 	display: flex;
 	flex-direction: column;
 }

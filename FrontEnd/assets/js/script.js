@@ -105,7 +105,7 @@ function buildButton(button) {
 // Modal ajout et supp
 async function BuildImgModal(data){
   let modalImage = document.querySelector(".galleryPhoto")
-  console.log(modalImage);
+  // console.log(modalImage);
  for (let a = 0; a < data.length; a++) {
 
       // créé une figure pour la modal
@@ -163,34 +163,53 @@ function buildModal(data) {
       buttonAddPic.innerHTML = "Ajouter une photo";
       modal.appendChild(buttonAddPic);
 
-      
-  // let modalPic = document.querySelector(".modal-2")
-  // buttonAddPic.addEventListener("click", (e) => {
-  //        e.preventDefault();
-  //         document.querySelector(".firstModal").style.display = "none"
-  //         // document.querySelector(".modal-2").style.display = "block";
-            
-  //        })
-}
-// function buidAddPicture(data) {
+  buttonAddPic.addEventListener("click", () => {
+      document.querySelector(".modalInner1").style.display = "none"
+        document.querySelector(".modalInner2").style.display = "flex";        
+  })
+   
+  let arrow = document.querySelector(".arrow-btn")
   
-  // console.log(modalPic);
+  arrow.addEventListener("click", () => {
+    document.querySelector(".modalInner2").style.display = "none"
+      document.querySelector(".modalInner1").style.display = "flex";
 
-  // let firstModal = document.querySelector(".firstModal")
+  })
 
-  //     buttonAddPic.addEventListener("click", (e) => {
-  //       e.preventDefault();
-  //       // document.querySelector(".firstModal").style.display = "none"
-  //       document.getElementById("modFormulaire").style.display = "block";
-          
-  //     })
 
-  //     let closeButton = document.querySelector(".close-btn");
-  //     console.log(closeButton); 
-  //       closeButton.addEventListener("click", () => {
-  //         firstModal.style.display = "block"; // Affiche à nouveau le modal lors de la fermeture
-  //     });
-// }
+}
+
+// filtre pour les noms des catégories
+function buildFilterModal(dataModal) {
+  let selection = document.querySelector("#categorie")
+ 
+    for (let f = 0; f < dataModal.length; f++) {
+     let filterCat = document.createElement("option")
+     filterCat.value = dataModal[f].name
+     filterCat.innerHTML = dataModal[f].name
+
+      selection.appendChild(filterCat)
+    }
+}
+
+ 
+function buidPhotoModal(dataPhoto) {
+  
+  let cadre = document.querySelector(".cadrePhoto1")
+  let cadre2 = document.querySelector(".cadrePhoto2")
+  let findImg = document.querySelector("#picture")
+ 
+  if (findImg.value) {
+    cadre2.style.display = "flex"
+    cadre.style.display = "none"
+    cadre2.createElement(img)
+    img.setAttribute("id",modalPhoto)
+    cadre2.appendChild(img)
+  }
+  
+}
+
+
 // pour utiliser await, on doit le mettre dans une fonction (et non pas en top level, en racine de page)
 async function startPage() {
   works = await getData("http://localhost:5678/api/works");
@@ -199,8 +218,9 @@ async function startPage() {
   buildHtml(works);
   buildButton(works) 
   BuildImgModal(works);
-  // buidAddPicture(works)
+  buildFilterModal(category)
   buildModal(works)
+  buidPhotoModal(works)
   // Puis continuer avec l'apel vers la fonction qui crée les boutons de filtre
   // Etc...
 }  
@@ -216,7 +236,12 @@ startPage();
 
   function toggleModal() {
     modalContainer.classList.toggle ("active")
+
   }
+  let modalStop = document.querySelector(".modal")
+  modalStop.addEventListener("click", (e) => {
+   e.stopPropagation()
+  });
 // }
 
 
@@ -279,4 +304,15 @@ const loginLink = document.getElementById("login-link")
 // login log out end   
 
 
- 
+// formElem.onsubmit = async (e) => {
+//   e.preventDefault();
+
+//   let response = await fetch('/article/formdata/post/user-avatar', {
+//     method: 'POST',
+//     body: new FormData(formElem)
+//   });
+
+//   let result = await response.json();
+
+//   alert(result.message);
+// };
