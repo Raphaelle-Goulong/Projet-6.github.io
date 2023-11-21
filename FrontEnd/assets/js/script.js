@@ -148,9 +148,7 @@ async function BuildImgModal(data){
         }
       });
      
-      });
-
-      
+      });     
  }
 }
  
@@ -164,13 +162,23 @@ function buildModal(data) {
       modal.appendChild(buttonAddPic);
 
   buttonAddPic.addEventListener("click", () => {
-      document.querySelector(".modalInner1").style.display = "none"
-        document.querySelector(".modalInner2").style.display = "flex";        
+    
+    let modalOne = document.querySelector(".modalInner1")
+      modalOne.style.display = "none"
+    let modalTwo = document.querySelector(".modalInner2"); 
+      modalTwo.style.display = "flex";
+
+      if (modalTwo) {
+        buttonAddPic.innerHTML = "Valider"
+        buttonAddPic.setAttribute("type","submit")
+      }
   })
    
+  // Récupération de l'élément avec la classe "arrow-btn"
   let arrow = document.querySelector(".arrow-btn")
   
   arrow.addEventListener("click", () => {
+    
     document.querySelector(".modalInner2").style.display = "none"
       document.querySelector(".modalInner1").style.display = "flex";
 
@@ -197,16 +205,21 @@ function buidPhotoModal(dataPhoto) {
   
   let cadre = document.querySelector(".cadrePhoto1")
   let cadre2 = document.querySelector(".cadrePhoto2")
+  console.log(cadre2);
   let findImg = document.querySelector("#picture")
- 
-  if (findImg.value) {
-    cadre2.style.display = "flex"
-    cadre.style.display = "none"
-    cadre2.createElement(img)
-    img.setAttribute("id",modalPhoto)
-    cadre2.appendChild(img)
-  }
   
+  findImg.addEventListener("change", (e) => {
+  //  console.log(e.target.files[0]);
+
+    if (e.target.files.length > 0) {
+      cadre2.style.display = "flex"
+      cadre.style.display = "none"
+      const img = document.createElement("img")
+      img.setAttribute("id","modalPhoto")
+      img.src = URL.createObjectURL(e.target.files[0])
+      cadre2.appendChild(img)
+    }
+  });
 }
 
 
@@ -304,15 +317,80 @@ const loginLink = document.getElementById("login-link")
 // login log out end   
 
 
-// formElem.onsubmit = async (e) => {
-//   e.preventDefault();
 
-//   let response = await fetch('/article/formdata/post/user-avatar', {
+//  try {
+//   const response = await fetch('http://localhost:5678/api/works', {
 //     method: 'POST',
-//     body: new FormData(formElem)
+//     headers: { 
+//       'Content-type': 'application/json',
+//         'Authorization':`Bearer ${localStorage.getItem("Token")}`,
+        
+//     },
+//     body: formData,
+//   })
+//   .then((res) => res.json())
+//   .then((data) => {
+//     console.log(data)
+  
+//     // return data;
+   
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     // Si erreur dans URL, retourne l'erreur pour pas bloquer la création de la page
+//     return error;
+//     // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
+//   })
+// }  
+
+// try {
+//   const response = await fetch('http://localhost:5678/api/works', {
+//     method: 'POST',
+//     headers: { 
+//       'Content-type': 'application/json',
+//       'Authorization': `Bearer ${localStorage.getItem("Token")}`,
+//     },
+//     body: JSON.stringify(formData),
 //   });
 
-//   let result = await response.json();
+//   const data = await response.json();
+//   console.log(data);
+//   // Faites quelque chose avec les données retournées si nécessaire
+// } catch (error) {
+//   console.error(error);
+//   // Gérez l'erreur ici
+// }
 
-//   alert(result.message);
-// };
+async function postData() {
+  try {
+    const title = document.getElementById("titre").value;
+    const imageModal = document.getElementById("modalphoto").value;
+    const categoryId = document.getElementById("categorie").value;
+    const formData = {
+      "id": 0,
+      "title": title,
+      "imageUrl": imageModal,
+      "categoryId": categoryId,
+      "userId": userId,
+    };
+
+    const response = await fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      headers: { 
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("Token")}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    
+  } catch (error) {
+    console.error(error);
+   
+  }
+}
+
+postData();
