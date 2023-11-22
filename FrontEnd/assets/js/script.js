@@ -200,6 +200,7 @@ function buildFilterModal(dataModal) {
     }
 }
 
+
  
 function buidPhotoModal(dataPhoto) {
   
@@ -221,6 +222,16 @@ function buidPhotoModal(dataPhoto) {
     }
   });
 }
+
+let btnAddProjet = document.querySelector("#addProjet")
+  btnAddProjet.addEventListener("click", () => {
+    // condition si l'image et la categorie sont remplis  it s okay 
+    // sinon message d'erreur pour l'utilisateur
+    postData() 
+   
+   
+} )
+
 
 
 // pour utiliser await, on doit le mettre dans une fonction (et non pas en top level, en racine de page)
@@ -317,80 +328,72 @@ const loginLink = document.getElementById("login-link")
 // login log out end   
 
 
-
-//  try {
-//   const response = await fetch('http://localhost:5678/api/works', {
-//     method: 'POST',
-//     headers: { 
-//       'Content-type': 'application/json',
-//         'Authorization':`Bearer ${localStorage.getItem("Token")}`,
-        
-//     },
-//     body: formData,
-//   })
-//   .then((res) => res.json())
-//   .then((data) => {
-//     console.log(data)
-  
-//     // return data;
-   
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//     // Si erreur dans URL, retourne l'erreur pour pas bloquer la création de la page
-//     return error;
-//     // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
-//   })
-// }  
-
-// try {
-//   const response = await fetch('http://localhost:5678/api/works', {
-//     method: 'POST',
-//     headers: { 
-//       'Content-type': 'application/json',
-//       'Authorization': `Bearer ${localStorage.getItem("Token")}`,
-//     },
-//     body: JSON.stringify(formData),
-//   });
-
-//   const data = await response.json();
-//   console.log(data);
-//   // Faites quelque chose avec les données retournées si nécessaire
-// } catch (error) {
-//   console.error(error);
-//   // Gérez l'erreur ici
 // }
 
-async function postData() {
-  try {
-    const title = document.getElementById("titre").value;
-    const imageModal = document.getElementById("modalphoto").value;
-    const categoryId = document.getElementById("categorie").value;
-    const formData = {
-      "id": 0,
-      "title": title,
-      "imageUrl": imageModal,
-      "categoryId": categoryId,
-      "userId": userId,
-    };
 
-    const response = await fetch('http://localhost:5678/api/works', {
-      method: 'POST',
-      headers: { 
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("Token")}`,
-      },
-      body: JSON.stringify(formData),
+function postData() {
+  let formData = new FormData();
+      formData.append('image', document.querySelector("#picture").files[0]);    
+      console.log(('title', document.querySelector("#titre").value), ('category', document.querySelector("#categorie").value));
+      formData.append('title', document.querySelector("#titre").value);
+      formData.append('category', document.querySelector("#categorie").value);
+
+  fetch("http://localhost:5678/api/works", {
+
+    method: 'POST',
+    headers: { 
+          'Authorization': `Bearer ${localStorage.getItem("Token")}`,
+            'Accept': 'application/json',
+            
+          },
+    body: formData,
+          
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      // si c'est okay , ferme la modale et rappeler la nouvelle image(S) 
+      // 
+
+    })
+    // Gestion d'erreur IMPORTANTE
+    .catch((error) => {
+      // Si erreur dans URL, retourne l'erreur pour ne pas bloquer la création de la page
+    
+      return error;
+      // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
     });
+  }
 
-    const data = await response.json();
-    console.log(data);
+// async function postData() {
+//   try {
+   
+//     let formData = new FormData();
+//     formData.append('image', document.querySelector("#picture").files[0]);    
+//     console.log(('title', document.querySelector("#titre").value), ('category', document.querySelector("#categorie").value));
+//     formData.append('title', document.querySelector("#titre").value);
+//     formData.append('category', document.querySelector("#categorie").value);
+
+
+//     console.log(document.querySelector("#picture").files[0]);  
+
+
+//     const response = await fetch('http://localhost:5678/api/works', {
+//       method: 'POST',
+//       headers: { 
+//         'Accept': 'application/json',
+//         'Authorization': `Bearer ${localStorage.getItem("Token")}`,
+//       },
+//       body: formData,
+//     });
+
+//     const data = await response.json();
+//     console.log(data);
 
     
-  } catch (error) {
-    console.error(error);
+//   } catch (error) {
+//     console.error(error);
    
-  }
-}
+//   }
+// }
 
-postData();
