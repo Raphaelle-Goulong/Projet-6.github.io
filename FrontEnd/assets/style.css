@@ -279,6 +279,7 @@ input[type="submit"]{
 	width: 100%;
 	max-width: 600px;
 	height: auto;
+	min-height: 600px;
 	background-color: #ffffff;
 	border-radius: 10px;
 	padding: 20px;
@@ -435,7 +436,6 @@ input[type="submit"]{
 	height: auto;
 	background-color:#e8f1f6;
 	position: relative;
-	
 	cursor: pointer;
 }
 
@@ -487,6 +487,7 @@ input[type="submit"]{
 	flex-direction: column;
 	width: 500px;
 	height: auto;
+	margin-bottom: 10px;
 }
 
 .formulaire > * {
@@ -518,19 +519,30 @@ select {
 	font-size: 1.1em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-	/* text-align: left; */
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 }
 
-#valid{
-	cursor: pointer;
+.infoError{
+	color: red;
+	margin-top: 20px;
+	display: none;
+}
+
+#addProjet{
+	width: 230px;
+	margin-top: 0;
+	margin-bottom: 20px;
+	/* /* padding-left: 50px; */
+    padding: 11px; 
 	background-color: gray;
 	color: white;
 	border: grey;
 }
-
+#addProjet:hover{
+	background-color: #1D6154;
+}
 
 /* ajout photo end */
 

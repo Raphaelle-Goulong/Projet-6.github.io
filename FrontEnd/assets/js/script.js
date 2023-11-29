@@ -18,7 +18,6 @@ function getData(url) {
 
 
 function buildHtml(data) {
-  // console.log(data);
   // Sélectionne les figures
   let myProjets = document.querySelector(".gallery");
 
@@ -59,17 +58,15 @@ function buildFilter(dataFilter) {
       button.textContent = dataFilter[i].name;
   // cet évènement permet de faire apparaitre et disparaitre les images ainsi que les figcaptions
       button.addEventListener("click", () => {
+
         let categoryId = dataFilter[i].id;
-        console.log(categoryId);
         let figures = document.getElementsByClassName("figureContainer")
         const figureArray = Array.from(figures);
-        console.log(figureArray);
         // boucle qui récupère le tableau des figures
         for (let j = 0; j < figureArray.length; j++) {
           
           if (categoryId == figureArray[j].dataset.cat ) {
             figureArray[j].style.display = "block";
-        
           } 
           else {
             figureArray[j].style.display = "none";
@@ -84,7 +81,6 @@ function buildFilter(dataFilter) {
 
 function buildButton(button) {
   let btnTous = document.querySelector(".all");
-    // console.log(btnTous);
   const token = localStorage.getItem("Token");
 
   if (token) {
@@ -94,7 +90,6 @@ function buildButton(button) {
     else {
         btnTous.addEventListener("click", () => {
           let figuresAll = document.querySelectorAll("figure");
-          // console.log(figuresAll);
           for (let a = 0; a < figuresAll.length; a++) {
             figuresAll[a].style.display = "block";
           }
@@ -104,11 +99,12 @@ function buildButton(button) {
 
 // Modal ajout et supp
 async function BuildImgModal(data){
-  let modalImage = document.querySelector(".galleryPhoto")
-  // console.log(modalImage);
- for (let a = 0; a < data.length; a++) {
 
-      // créé une figure pour la modal
+  let modalImage = document.querySelector(".galleryPhoto")
+
+  for (let a = 0; a < data.length; a++) {
+
+ // créé une figure pour la modal
 
   let figureModal = document.createElement("figure");
       figureModal.classList.add("figureContent")
@@ -132,16 +128,13 @@ async function BuildImgModal(data){
 
 
       buttonTrash.addEventListener("click", (e) => {
-        // console.log("vous avez cliqué");
         e.preventDefault();
        // Supprimez la figure correspondante dans buildHtml
        const figureToDelete = document.querySelector(`.figureContainer[data-cat="${data[a].categoryId}"]`);
-       //figureToDelete.remove();
 
       // Supprimez la figure de la galerie modal
         
       deleteData(`http://localhost:5678/api/works/${data[a].id}`).then((result) => {
-        console.log(result);
         if (result) {
           figureToDelete.remove();
           figureModal.remove();
@@ -155,36 +148,37 @@ async function BuildImgModal(data){
 function buildModal(data) {
   // création de la modal et du bouton ajouter une photo
   let modal = document.querySelector(".modal")
-      let buttonAddPic = document.createElement("button")
-      buttonAddPic.classList.add("btn-sorting");
-      buttonAddPic.setAttribute("id","addPicture")
-      buttonAddPic.innerHTML = "Ajouter une photo";
-      modal.appendChild(buttonAddPic);
+  let modalUno = document.querySelector(".modalInner1")
+  let buttonAddPic = document.createElement("button")
+    buttonAddPic.classList.add("btn-sorting");
+    buttonAddPic.setAttribute("id","addPicture")
+    buttonAddPic.innerHTML = "Ajouter une photo";
+    modalUno.appendChild(buttonAddPic);
 
   buttonAddPic.addEventListener("click", () => {
     
     let modalOne = document.querySelector(".modalInner1")
-      modalOne.style.display = "none"
     let modalTwo = document.querySelector(".modalInner2"); 
-      modalTwo.style.display = "flex";
 
-      if (modalTwo) {
-        buttonAddPic.innerHTML = "Valider"
-        buttonAddPic.setAttribute("type","submit")
+      if (modalOne) {
+        modalOne.style.display = "none";
       }
+    
+      if (modalTwo) {
+        modalTwo.style.display = "flex";
+      }
+      
   })
    
-  // Récupération de l'élément avec la classe "arrow-btn"
+  // Récupérer la classe "arrow-btn"
   let arrow = document.querySelector(".arrow-btn")
-  
-  arrow.addEventListener("click", () => {
-    
-    document.querySelector(".modalInner2").style.display = "none"
-      document.querySelector(".modalInner1").style.display = "flex";
+  // cacher et afficher les modales
+    arrow.addEventListener("click", () => {
+      
+      document.querySelector(".modalInner2").style.display = "none"
+        document.querySelector(".modalInner1").style.display = "flex";
 
-  })
-
-
+    })
 }
 
 // filtre pour les noms des catégories
@@ -193,25 +187,20 @@ function buildFilterModal(dataModal) {
  
     for (let f = 0; f < dataModal.length; f++) {
      let filterCat = document.createElement("option")
-     filterCat.value = dataModal[f].name
+     filterCat.value = dataModal[f].id
      filterCat.innerHTML = dataModal[f].name
-
       selection.appendChild(filterCat)
     }
 }
 
-
- 
+// 
 function buidPhotoModal(dataPhoto) {
-  
+  // récupérer les 2 cadres photos
   let cadre = document.querySelector(".cadrePhoto1")
   let cadre2 = document.querySelector(".cadrePhoto2")
-  console.log(cadre2);
   let findImg = document.querySelector("#picture")
-  
+  // switch entre cadre 1 et 2, et et permet d'afficher l'image dans le cadre2
   findImg.addEventListener("change", (e) => {
-  //  console.log(e.target.files[0]);
-
     if (e.target.files.length > 0) {
       cadre2.style.display = "flex"
       cadre.style.display = "none"
@@ -223,14 +212,24 @@ function buidPhotoModal(dataPhoto) {
   });
 }
 
+// bouton de validation
 let btnAddProjet = document.querySelector("#addProjet")
-  btnAddProjet.addEventListener("click", () => {
-    // condition si l'image et la categorie sont remplis  it s okay 
-    // sinon message d'erreur pour l'utilisateur
-    postData() 
-   
-   
-} )
+btnAddProjet.addEventListener("click", () => {
+//  récupère les inputs et le message d'erreur
+  let PicValue = document.querySelector("#picture")   
+  let TitleValue = document.querySelector("#titre")
+  let catValue = document.querySelector("#categorie")
+  let errorValue = document.querySelector(".infoError")
+
+  // condition qui vérifie les champs vides
+  if (catValue.value == "" || PicValue.files.length == 0 || TitleValue.value == "") {
+    errorValue.style.display = "flex";
+    return false;
+  } else {
+    
+    postData();   
+  } 
+})
 
 
 
@@ -252,28 +251,25 @@ startPage();
 
 // Modal open-close {
   const modalContainer = document.querySelector(".modalContainer")
-  // console.log(modalContainer);
   const modalTriggers = document.querySelectorAll(".modal-trigger")
-  // console.log(modalTriggers);
- 
-  modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+    modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
   function toggleModal() {
     modalContainer.classList.toggle ("active")
-
   }
+
   let modalStop = document.querySelector(".modal")
   modalStop.addEventListener("click", (e) => {
+    // permet d'empecher au enfant d'avoir les memes propriété que les parents
    e.stopPropagation()
   });
 // }
 
 
 // permet de faire disparaitre le bouton token en présence/absence du token
- if (localStorage.getItem("Token") == null){
+if (localStorage.getItem("Token") == null){
    document.getElementById("token").style.display = "none"
- }
-
+}
 
 function deleteData(url) {
   
@@ -334,7 +330,6 @@ const loginLink = document.getElementById("login-link")
 function postData() {
   let formData = new FormData();
       formData.append('image', document.querySelector("#picture").files[0]);    
-      console.log(('title', document.querySelector("#titre").value), ('category', document.querySelector("#categorie").value));
       formData.append('title', document.querySelector("#titre").value);
       formData.append('category', document.querySelector("#categorie").value);
 
@@ -353,47 +348,18 @@ function postData() {
     .then((data) => {
       console.log(data);
       // si c'est okay , ferme la modale et rappeler la nouvelle image(S) 
-      // 
+      // Ferme la modale
+      toggleModal()
+      // Rappelle la fonction pour afficher la nouvelle image
+      buildHtml([data]);
+      
 
     })
     // Gestion d'erreur IMPORTANTE
     .catch((error) => {
-      // Si erreur dans URL, retourne l'erreur pour ne pas bloquer la création de la page
-    
       return error;
-      // OU mieux : créer une fonction qui affiche l'erreur dans une modal, un coin du site...
     });
   }
 
-// async function postData() {
-//   try {
-   
-//     let formData = new FormData();
-//     formData.append('image', document.querySelector("#picture").files[0]);    
-//     console.log(('title', document.querySelector("#titre").value), ('category', document.querySelector("#categorie").value));
-//     formData.append('title', document.querySelector("#titre").value);
-//     formData.append('category', document.querySelector("#categorie").value);
 
-
-//     console.log(document.querySelector("#picture").files[0]);  
-
-
-//     const response = await fetch('http://localhost:5678/api/works', {
-//       method: 'POST',
-//       headers: { 
-//         'Accept': 'application/json',
-//         'Authorization': `Bearer ${localStorage.getItem("Token")}`,
-//       },
-//       body: formData,
-//     });
-
-//     const data = await response.json();
-//     console.log(data);
-
-    
-//   } catch (error) {
-//     console.error(error);
-   
-//   }
-// }
 
